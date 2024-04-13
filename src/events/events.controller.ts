@@ -1,5 +1,5 @@
 // event.controller.ts
-import { Controller, Get, Put, Body, Param } from '@nestjs/common';
+import { Controller, Get, Put, Delete, Body, Param } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { Event } from '../models/event.model'
 
@@ -13,17 +13,22 @@ export class EventsController {
   }
 
   @Get(':id')
-  getEventData(@Param('id') id: string) {
+  getEvent(@Param('id') id: string) {
     const filePath = `./data/${id}.json`; // Adjust the path as needed
     return this.eventService.getEvent(id);
   }
 
   @Put(':id')
-  updateEventData(@Param('id') id: string, @Body() data: any) {
+  updateEvent(@Param('id') id: string, @Body() data: any) {
 
     this.eventService.saveEvent(id, data);
 
     // May need to generate new event id, song ids, media ids before sending back to the client
     return data;
   } 
+
+  @Delete(':id')
+  deleteEvent(@Param('id') id: string) {
+    return this.eventService.deleteEvent(id);
+  }
 }
