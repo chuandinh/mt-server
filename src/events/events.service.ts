@@ -32,6 +32,8 @@ export class EventsService {
           // Assign id base on the file name
           event.id = this.stringToInt(eventId);
 
+          event.date = this.formatDate(event.date);
+
           // Empty the songs for the list
           event.songs = [];
 
@@ -40,7 +42,8 @@ export class EventsService {
       }
     });
 
-    return events;
+    // sort by Id, posible date time in the future
+    return events.sort((a, b) => a.id - b.id);;
   }
 
   getEvent(id: string): Event {
